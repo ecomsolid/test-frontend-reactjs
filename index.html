@@ -43,6 +43,8 @@
             ],
           },
         ]
+        
+        // Tạo map components
         let mapComponents = []
         let createMapComponents = function(components) {
           let loopMapComponent = function(component) {
@@ -63,6 +65,8 @@
           loopMapComponents(components)
         }
         createMapComponents(components);
+
+        // func update iframe
         let updateFrame = function() {
           $win.$frameRoot.setState({
             components: components,
@@ -70,6 +74,8 @@
           });
         }
         updateFrame();
+
+        // Events click
         document.querySelector(".buttonClick").onclick = function() {
           let text = document.querySelector(".inputName").value;
           mapComponents["0f5aa352-f84f-4b18-9395-99f2c8983b69"].childrens = text

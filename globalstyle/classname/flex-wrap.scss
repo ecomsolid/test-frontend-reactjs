@@ -1,0 +1,11 @@
+$displays: (
+    "wrap": wrap,
+    "wrap-reverse": wrap-reverse,
+    "nowrap": nowrap,
+);
+
+@each $key, $value in $displays {
+  .flex-wrap-#{$key} {
+    flex-wrap: $value;
+  }
+}

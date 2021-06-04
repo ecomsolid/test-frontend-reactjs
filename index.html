@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  <head>
+    <link rel="stylesheet" href="./normalize.css" />
+    <link rel="stylesheet" href="./globalstyle.css" />
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.14.4/babel.min.js"></script>
+  </head>
   <body>
-  
     <div id="mydiv"></div>
-
+    <script type="text/babel" src="components/general/button/Button.jsx"></script>
+    <script type="text/babel" src="components/layout/grid/Col.jsx"></script>
+    <script type="text/babel" src="components/layout/grid/Row.jsx"></script>
     <script type="text/babel">
       class ComponentRoot extends React.Component {
         render() {
-          return <h1>Hello World!</h1>
+          return (
+            <>
+              <Row>
+                <h1>Button:</h1>
+              </Row>
+              <Row>
+                <Col width="50" order="2">
+                  <Button type="primary">Primary Button</Button>
+                  <Button>Default Button</Button>
+                  <Button type="dashed">Dashed Button</Button>
+                </Col>
+                <Col width="50" order="1">
+                  <Button type="text">Text Button</Button>
+                  <Button type="link">Link Button</Button>
+                </Col>
+              </Row>
+            </>
+          );
         }
       }
 
-      ReactDOM.render(<ComponentRoot />, document.getElementById('mydiv'))
+      ReactDOM.render(<ComponentRoot />, document.getElementById("mydiv"));
     </script>
   </body>
 </html>

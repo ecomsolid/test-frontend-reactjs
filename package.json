@@ -1,0 +1,27 @@
+{
+  "name": "frontend-reactjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "concurrently \"yarn liveServer\" \"yarn buildGlobalStyle\"",
+    "liveServer": "live-server",
+    "buildGlobalStyle": "node-sass globalstyle/index.scss -w -r globalstyle.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haicaodac/frontend-reactjs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haicaodac/frontend-reactjs/issues"
+  },
+  "homepage": "https://github.com/haicaodac/frontend-reactjs#readme",
+  "dependencies": {
+    "concurrently": "^6.2.0",
+    "live-server": "^1.2.1",
+    "node-sass": "^6.0.0"
+  }
+}

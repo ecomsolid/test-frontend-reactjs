@@ -1,0 +1,14 @@
+
+@import "./variables.scss";
+@import "./components/button.scss"; 
+@import "./classname/display.scss"; 
+@import "./classname/flex-direction.scss"; 
+@import "./classname/flex-wrap.scss"; 
+@import "./classname/flex.scss"; 
+@import "./classname/justify-content.scss"; 
+@import "./classname/align-items.scss";
+
+body {
+    background-color: $body-background;
+    font-family: $font-family;
+}

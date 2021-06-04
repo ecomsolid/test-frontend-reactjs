@@ -1,0 +1,13 @@
+$displays: (
+    "flex-start": flex-start,
+    "flex-end": flex-end,
+    "center": center,
+    "baseline": baseline,
+    "stretch": stretch,
+);
+
+@each $key, $value in $displays {
+  .align-items-#{$key} {
+    align-items: $value;
+  }
+}

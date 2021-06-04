@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./normalize.css" />
+    <link rel="stylesheet" href="./globalstyle.css" />
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.14.4/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+  </head>
+  <body>
+    <div id="mydiv"></div>
+    <script
+      type="text/babel"
+      src="atoms/general/button/Button.jsx"
+    ></script>
+    <script type="text/babel" src="atoms/layout/grid/Col.jsx"></script>
+    <script type="text/babel" src="atoms/layout/grid/Row.jsx"></script>
+    <script type="text/babel">
+      class ComponentRoot extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            components: [],
+            mapNameComponents: {
+              Col: Col,
+              Row: Row,
+              Button: Button,
+            }
+          }
+          // console.log("Render: ", this.recursiveComponents(this.components));
+        }
+
+        recursiveComponentItem(component) {
+          if (component && this.state.mapNameComponents[component.tag]) {
+            let type = this.state.mapNameComponents[component.tag];
+            let childrens = component.childrens;
+            if (Array.isArray(component.childrens)) {
+              childrens = this.recursiveComponents(component.childrens);
+            }
+            let props = {
+              uid: component.uid,
+            };
+
+            return React.createElement(type, props, childrens);
+          }
+        }
+
+        recursiveComponents(components) {
+          let cps = [];
+          if (components && components.length) {
+            for (let i = 0; i < components.length; i++) {
+              const component = components[i];
+              cps.push(this.recursiveComponentItem(component));
+            }
+          }
+          return cps;
+        }
+
+        render() {
+          return <>{this.recursiveComponents(this.state.components)}</>;
+        }
+      }
+
+      window.$frameRoot = ReactDOM.render(
+        <ComponentRoot />,
+        document.getElementById("mydiv")
+      );
+    </script>
+  </body>
+</html>

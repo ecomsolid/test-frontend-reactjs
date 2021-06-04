@@ -1,42 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="./normalize.css" />
-    <link rel="stylesheet" href="./globalstyle.css" />
-    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone@7.14.4/babel.min.js"></script>
-  </head>
   <body>
-    <div id="mydiv"></div>
-    <script type="text/babel" src="components/general/button/Button.jsx"></script>
-    <script type="text/babel" src="components/layout/grid/Col.jsx"></script>
-    <script type="text/babel" src="components/layout/grid/Row.jsx"></script>
-    <script type="text/babel">
-      class ComponentRoot extends React.Component {
-        render() {
-          return (
-            <>
-              <Row>
-                <h1>Button:</h1>
-              </Row>
-              <Row>
-                <Col width="50" order="2">
-                  <Button type="primary">Primary Button</Button>
-                  <Button>Default Button</Button>
-                  <Button type="dashed">Dashed Button</Button>
-                </Col>
-                <Col width="50" order="1">
-                  <Button type="text">Text Button</Button>
-                  <Button type="link">Link Button</Button>
-                </Col>
-              </Row>
-            </>
-          );
-        }
-      }
+    <iframe src="./iframe.html" width="100%" height="500px"></iframe>
+    <input type="text" class="inputName" value="Default Text" />
+    <button class="buttonClick">Change Text</button>
+    <script>
+      // DOM is loaded and ready for manipulation here
+      setTimeout(function () {
+        let iframe = document.querySelector("iframe");
+        let $win = iframe.contentWindow;
 
-      ReactDOM.render(<ComponentRoot />, document.getElementById("mydiv"));
+        console.log("Start Render...");
+        let components = [
+          {
+            uid: "0f5aa352-f84f-4b18-9395-99f2c8983b66", // Duy nhất
+            tag: "Col",
+            label: "Col",
+            settings: {},
+            childrens: [
+              {
+                uid: "0f5aa352-f84f-4b18-9395-99f2c8983b67", // Duy nhất
+                tag: "Button",
+                label: "Button",
+                settings: {},
+                childrens: "Button Col",
+              },
+              {
+                uid: "0f5aa352-f84f-4b18-9395-99f2c8983b68", // Duy nhất
+                tag: "Col",
+                label: "Col",
+                settings: {},
+                childrens: [
+                  {
+                    uid: "0f5aa352-f84f-4b18-9395-99f2c8983b69", // Duy nhất
+                    tag: "Button",
+                    label: "Button",
+                    settings: {},
+                    childrens: "Button Row",
+                  },
+                ],
+              },
+            ],
+          },
+        ]
+        let mapComponents = []
+        let createMapComponents = function(components) {
+          let loopMapComponent = function(component) {
+            if (component) {
+              mapComponents[component.uid] = component;
+            }
+          }
+          let loopMapComponents = function(components) {
+            if (components && components.length) {
+              components.forEach(function(component) {
+                loopMapComponent(component);
+                if (Array.isArray(component.childrens)) {
+                  loopMapComponents(component.childrens)
+                }
+              })
+            }
+          }
+          loopMapComponents(components)
+        }
+        createMapComponents(components);
+        let updateFrame = function() {
+          $win.$frameRoot.setState({
+            components: components,
+            // mapComponents: mapComponents,
+          });
+        }
+        updateFrame();
+        document.querySelector(".buttonClick").onclick = function() {
+          let text = document.querySelector(".inputName").value;
+          mapComponents["0f5aa352-f84f-4b18-9395-99f2c8983b69"].childrens = text
+          updateFrame();
+        }
+      }, 2000);
     </script>
   </body>
 </html>
